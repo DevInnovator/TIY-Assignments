@@ -16,12 +16,14 @@
 @property (strong, nonatomic) IBOutlet UITextView *missionBriefingTextView;
 
 - (IBAction)authenticateAgent:(UIButton *)sender;
-
+    // this is a METHOD a collection of instructions to occur due to actions by user
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad
+    //nothing gets returned from (void), so nothing is going to be returned from viewDidLoaded
+
 {
     [super viewDidLoad];
 
@@ -33,9 +35,13 @@
 //    [self.agentNameTextField setText:];
 //    self.greetingLabel.text = ;
 //    self.missionBriefingTextView.text = ;
-    self.agentNameTextField.text = @"";
+    [self.agentNameTextField setText: @""];
+    //method call, recipe for set of instructions with an arguement
     self.greetingLabel.text = @"";
+    // = is an assignment value (empty string) to a label
     self.missionBriefingTextView.text = @"";
+    // set a property, reference a property and what?
+    //self.name in viewDidLoad, name is the property, method is the full self.name
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +51,8 @@
 }
 
 - (IBAction)authenticateAgent:(UIButton *)sender
-{
+{ //IBAction so we know its connected to something on our storyboard
+    //This must be a button, getting Button as argument, what does the View ask the View Controller that what happens after user pushes button
     
     
     // This will cause the keyboard to dismiss when the authenticate button is tapped
@@ -58,37 +65,43 @@
     // 2. Check whether there is text in BOTH the name and password textfields
     //
     if (![self.agentNameTextField.text isEqualToString:@""] && ![self.agentPasswordTextField.text isEqualToString:@""])
-        
+        //any METHOD with "IS" something, is a BOOL method by Apple
+        //if conditional must return a BOOL, the conditional is the return of the method
+        //if the textfield property is empty, BOOL returns YES
+    {
+    {
+//        NSString *agentName = self.agentPasswordTextField.text;
+        //when I substitute agentName for self.agentPasswordTextField below, the app crashes
+        //instead of typing self.agentPasswordTextField.text you can use agentName
+        NSArray *nameComponents = [self.agentNameTextField.text componentsSeparatedByString:@" "];
+        self.greetingLabel.text= [NSString stringWithFormat:@"Good Evening, Agent %@", nameComponents[1]];
+//        self.greetingLabel.text = greeting;
+        //NSString *greeting
+    }
+    
     {
         NSArray *nameComponents = [self.agentNameTextField.text componentsSeparatedByString:@" "];
-        NSString *greeting = [NSString stringWithFormat:@"Good Evening, Agent %@", nameComponents[1]];
-        self.greetingLabel.text = greeting;
+        NSString *briefing = [NSString stringWithFormat:@"This mission will be an arduous one, fraught with peril. You will cover much strange and unfamiliar territory. Should you choose to accept this mission, Agent %@, you will certainly be disavowed, but you will be doing your country a great service. This message will self destruct in 5 seconds.", nameComponents[1]];
+        //nameComponents is an arguement and goes after NSString @""
+                            self.missionBriefingTextView.text = briefing;
     }
-    {
-        NSArray *nameComponents = [self.agentNameTextField.text componentsSeparatedByString:@" "];
-        NSString *briefing = [NSString stringWithFormat:@"This mission will be an arduous one, fraught with peril. You will cover much strange and unfamiliar territory. Should you choose to accept this mission, Agent %@", nameComponents[1]];
-                              self.missionBriefingTextView.text = briefing;
-    }
-    {
-        UIColor *authenticatedBackgroundColor = nil;
+    
+      
+    {   UIColor *authenticatedBackgroundColor = [UIColor colorWithRed:0.585 green:0.78 blue:0.188 alpha:1.0];
         self.view.backgroundColor = authenticatedBackgroundColor;
+    }
+    }
+    else
         
-        UIColor *accessDeniedBackgroundColor = nil;
+    {
+        UIColor *accessDeniedBackgroundColor = [UIColor colorWithRed:0.78 green:0.188 blue:0.188 alpha:1.0];
         self.view.backgroundColor = accessDeniedBackgroundColor;
-        
-        if (sender.buttonType == YES)
-        {
-            self.view.backgroundColor = [UIColor greenColor];
-        }
     }
-    if ([self.agentNameTextField.text isEqualToString:nil])
-        {
-            self.view.backgroundColor = [UIColor redColor];
-        }
-    }
+}
     
-  
-    
+
+
+
         // use * when creating an object variable, when only referencing the object variable then no *
         //when referencing a property we use "self" referencing class we are in, we are trying to see if text field is empty or has text, so "self.agentNameTextField + .text to find the text in the field"
 
