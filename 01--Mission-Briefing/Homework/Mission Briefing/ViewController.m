@@ -46,6 +46,8 @@
 
 - (IBAction)authenticateAgent:(UIButton *)sender
 {
+    
+    
     // This will cause the keyboard to dismiss when the authenticate button is tapped
     if ([self.agentNameTextField isFirstResponder])
     {
@@ -55,50 +57,44 @@
     //
     // 2. Check whether there is text in BOTH the name and password textfields
     //
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *) agentNameTextField
-    
-{
-    BOOL rc = NO;
-    
-    if (![self.agentNameTextField.text isEqualToString:@""] && [self.agentPasswordTextField.text isEqualToString:@""])
+    if (![self.agentNameTextField.text isEqualToString:@""] && ![self.agentPasswordTextField.text isEqualToString:@""])
+        
     {
-        [agentNameTextField resignFirstResponder];
-        NSArray *nameComponents = [agentNameTextField.text componentsSeparatedByString:@" "];
+        NSArray *nameComponents = [self.agentNameTextField.text componentsSeparatedByString:@" "];
         NSString *greeting = [NSString stringWithFormat:@"Good Evening, Agent %@", nameComponents[1]];
         self.greetingLabel.text = greeting;
-        
-
-
-
-
-        //
-        // 3. The greetingLabel needs to be populated with the the string "Good evening, Agent #", where # is the last name of
-        //    the agent logging in. The agent's full name is listed in the text field, but you need to pull out just the last
-        //    name. Open the Apple Documentation and go to the page for NSString. There is a section in the left called "Dividing
-        //    Strings". You should be able to find a method that allows you to break up a string using a delimiter. In our case,
-        //    the delimiter would be a space character.
-        //
-        
-        NSString *agentName = self.agentNameTextField.text;
-
-        // Additional step(s) to remove only the last name
-        self.greetingLabel.text = @"?";
-        
-        //
-        // 4. The mission briefing textview needs to be populated with the briefing from HQ, but it must also include the last
-        //    name of the agent that logged in. You will notice in the text a "%@" string after the word "Agent". This
-        //    instructs the system to replace the "%@" with an actual value at runtime. Perhaps you could use the text in the
-        //    textfield to get the agent's last name.
-        //
-        //    Set the textview text property to the paragraph in "MissionBriefing.txt"
-        //
-        
-        self.missionBriefingTextView.text  = [NSString stringWithFormat:@"This mission will be an arduous one, fraught with peril. You will cover much strange and unfamiliar territory. Should you choose to accept this mission, Agent %@", nameComponents[1]];
     }
-    return rc;
-}
+    {
+        NSArray *nameComponents = [self.agentNameTextField.text componentsSeparatedByString:@" "];
+        NSString *briefing = [NSString stringWithFormat:@"This mission will be an arduous one, fraught with peril. You will cover much strange and unfamiliar territory. Should you choose to accept this mission, Agent %@", nameComponents[1]];
+                              self.missionBriefingTextView.text = briefing;
+    }
+    {
+        UIColor *authenticatedBackgroundColor = nil;
+        self.view.backgroundColor = authenticatedBackgroundColor;
+        
+        UIColor *accessDeniedBackgroundColor = nil;
+        self.view.backgroundColor = accessDeniedBackgroundColor;
+        
+        if (sender.buttonType == YES)
+        {
+            self.view.backgroundColor = [UIColor greenColor];
+        }
+    }
+    if ([self.agentNameTextField.text isEqualToString:nil])
+        {
+            self.view.backgroundColor = [UIColor redColor];
+        }
+    }
+    
+  
+    
+        // use * when creating an object variable, when only referencing the object variable then no *
+        //when referencing a property we use "self" referencing class we are in, we are trying to see if text field is empty or has text, so "self.agentNameTextField + .text to find the text in the field"
+
+/*
+ 
+ 
 
         //
         // 5. The view's background color needs to switch to green to indicate a successful login by the agent.
@@ -127,6 +123,6 @@
         UIColor *accessDeniedBackgroundColor = nil;
         // Additional step to set the above color object to self.view's background color
 
-
+*/
 
 @end
